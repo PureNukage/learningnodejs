@@ -1,27 +1,19 @@
 const express = require('express');
 const app = express();
 
-var http = require('http');
-var fs = require('fs');
+app.set('view engine', 'ejs');
 
-const server = http.createServer(function(req, res){
-	console.log("request was made: " + req.url);
-	if(req.url === '/home' || req.url === '/'){
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		fs.createReadStream(__dirname + '/index.html').pipe(res);
-	} else if(req.url === '/contact'){
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		fs.createReadStream(__dirname + '/contact.html').pipe(res);		
-	} else if(req.url === '/api/ninjas'){
-		var ninjas = [{name: 'ryu', age: 29}, {name: 'yoshi', age: 32}]; 
-		res.writeHead(200, {'Content-Type': 'application/json'});
-		res.end(JSON.stringify(ninjas));
-	} else {
-		res.writeHead(404, {'Content-Type': 'text/html'});
-		fs.createReadStream(__dirname + '/404.html').pipe(res);
-	} 
+app.get('/', function(req, res){
+	res.sendFile(__dirname + '/index.html');
 });
 
-server.listen(3000, () => {
-	console.log(`Express running -> PORT ${server.address().port}`);
+app.get('/contact', function(req, res){
+	res.sendFile(__dirname + '/contact.html');
 });
+
+app.get('/profile/:name', function(req, res){
+	var data = {age: 29, job: 'ninja'};
+	res.render('profile', {person: req.params.name, data: data});
+});
+
+app.listen(3000);
