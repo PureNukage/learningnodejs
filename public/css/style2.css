@@ -1,0 +1,12 @@
+h1 {
+    text-align: center;
+    font-family: Arial;
+}
+
+h2 {
+    text-align: center;
+    border-width: 5px;
+    border-style: outset;
+    border-color: #1C6EA4;
+    border-radius: 16px;
+}
