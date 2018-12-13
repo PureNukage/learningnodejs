@@ -1,17 +1,19 @@
 const express = require('express');
 const app = express();
+const http = require('http');
 
-app.set('view engine', 'pug');
+var port = 3000;
 
-app.use(express.static(__dirname + '/public'));
+ app.get('/', function (req, res) {
+	res.sendFile(__dirname + '/index.html');
+ });
 
-app.get('/', (req, res) => {
-	res.render('index', {
-		title: 'Homepage',
-		people: people.profiles
-	});
+/*
+const server = http.createServer((req, res) => {
+	res.
 });
+*/
 
-const server = app.listen(3000, () => {
-	console.log(`Express running -> PORT ${server.address().port}`);
+app.listen(port, () => {
+	console.log(`listening on port: ${port}`);
 });
